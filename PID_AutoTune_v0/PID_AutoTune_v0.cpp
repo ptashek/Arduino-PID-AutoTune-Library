@@ -16,6 +16,30 @@
 // as reported on http://www.mstarlabs.com/control/znrule.html
 
 // order must be match enumerated type for auto tune methods
+
+CmdMessenger cmdMessenger = CmdMessenger(Serial,',',';','/');
+enum
+{
+  // Commands
+  cmdAck         , // Command to acknowledge that cmd was received
+  logger,
+  startHatch,
+  stopHatch,
+  runManual,
+  startAutoTune,
+  getPID,
+  setPID,
+  setTempOutput,
+  status,
+  logToInflux,
+  setTempSetpoint,
+  getTempSetpoint,
+  setHumSetpoint,
+  getHumSetpoint
+
+};
+
+
 const PROGMEM Tuning tuningRule[PID_ATune::NO_OVERSHOOT_PID + 1] =
 {
   { {  44, 24,   0 } },  // ZIEGLER_NICHOLS_PI
@@ -305,7 +329,7 @@ tmpMess += String(refVal,6);
 tmpMess += F(" setpint ");
 tmpMess += String(setpoint,6);
 tmpMess += F(" output ");
-tmpMess += String(outpoint,6);
+tmpMess += String(*outpoint,6);
 tmpMess += F(" state ");
 tmpMess += String(state,6);
 cmdMessenger.sendCmd(logger,tmpMess);
@@ -530,8 +554,8 @@ tmpMess += String(refVal,6);
 tmpMess += F(" peakType ");
 tmpMess += String(peakType,6);
 
-tmpMess += F(" iMin ");
-tmpMess += String(iMin,6);
+tmpMess += F(" isMin ");
+tmpMess += String(isMin,6);
 tmpMess += F(" isMax ");
 tmpMess += String(isMax,6);
 
@@ -702,7 +726,7 @@ cmdMessenger.sendCmd(logger,tmpMess);
 #endif
 
 #if defined (AUTOTUNE_PYCMD_INFO)
-String tmpMess="";
+tmpMess="";
 tmpMess +=F("ERROR: Autotune: FAILED ");
 cmdMessenger.sendCmd(logger,tmpMess);
 #endif
@@ -721,7 +745,7 @@ cmdMessenger.sendCmd(logger,tmpMess);
   Serial.println(Ku);
 #endif
 #if defined (AUTOTUNE_PYCMD_INFO)
-String tmpMess="";
+tmpMess="";
 tmpMess +=F("ERROR: Autotune: ultimate gain ");
 tmpMess += String(1.0 / Ku);
 tmpMess += F(" Ku ");
@@ -737,7 +761,7 @@ cmdMessenger.sendCmd(logger,tmpMess);
   Serial.println(Pu);
 #endif
 #if defined (AUTOTUNE_PYCMD_INFO)
-String tmpMess="";
+tmpMess="";
 tmpMess +=F("ERROR: Autotune: ultimate period ");
 tmpMess += String(Pu);
 cmdMessenger.sendCmd(logger,tmpMess);
@@ -761,7 +785,7 @@ cmdMessenger.sendCmd(logger,tmpMess);
   Serial.println(kappa_phi);
 #endif
 #if defined (AUTOTUNE_PYCMD_INFO)
-String tmpMess="";
+tmpMess="";
 tmpMess +=F("ERROR: Autotune: gain ratio kappa ");
 tmpMess += String(kappa_phi);
 cmdMessenger.sendCmd(logger,tmpMess);
@@ -947,7 +971,7 @@ void PID_ATune::SetNoiseBand(double band)
   Serial.println("IN set noiseBand");
   String tmpMess="";
   tmpMess +=F("INFO: In noiseband noisband");
-  tmpMess += String(noisBand);
+  tmpMess += String(noiseBand);
   cmdMessenger.sendCmd(logger,tmpMess);
   #endif
 }
