@@ -159,7 +159,7 @@ bool PID_ATune::Runtime()
 
 #if defined (AUTOTUNE_PYCMD_INFO)
 String tmpMess="";
-tmpMess += F("INFO: Autotune: asymmetry ");
+tmpMess += F("DEBUG: Autotune: asymmetry ");
 tmpMess += String(asymmetry,6);
 cmdMessenger.sendCmd(logger,tmpMess);
 #endif
@@ -215,7 +215,7 @@ cmdMessenger.sendCmd(logger,tmpMess);
 #endif
 #if defined (AUTOTUNE_PYCMD_INFO)
 String tmpMess="";
-tmpMess += F("INFO: Autotune: deltaRelayBias ");
+tmpMess += F("DEBUG: Autotune: deltaRelayBias ");
 tmpMess += String(deltaRelayBias,6);
 tmpMess += F(" relayBias ");
 tmpMess += String(relayBias,6);
@@ -253,7 +253,7 @@ cmdMessenger.sendCmd(logger,tmpMess);
 for (byte i = 1; i < (stepCount > 4 ? 5 : stepCount); i++)
 {
   String tmpMess="";
-  tmpMess += F("INFO: Autotune: step time ");
+  tmpMess += F("DEBUG: Autotune: step time ");
   tmpMess += String(lastStepTime[i],6);
   tmpMess += F(" step sum  ");
   tmpMess += String(sumInputSinceLastStep[i],6);
@@ -303,9 +303,9 @@ for (byte i = 1; i < (stepCount > 4 ? 5 : stepCount); i++)
 #endif
 #if defined (AUTOTUNE_PYCMD_INFO)
 String tmpMess="";
-tmpMess += F("INFO: Autotune: refVal ");
+tmpMess += F("DEBUG: Autotune: refVal ");
 tmpMess += String(refVal,6);
-tmpMess += F(" setpint ");
+tmpMess += F(" setpoint ");
 tmpMess += String(setpoint,6);
 tmpMess += F(" output ");
 tmpMess += String(*output,6);
@@ -382,7 +382,7 @@ cmdMessenger.sendCmd(logger,tmpMess);
 
 #if defined (AUTOTUNE_PYCMD_INFO)
 String tmpMess="";
-tmpMess += F("INFO: Autotune: iMax ");
+tmpMess += F("DEBUG: Autotune: iMax ");
 tmpMess += String(iMax,6);
 tmpMess += F(" iMin ");
 tmpMess += String(iMin,6);
@@ -418,7 +418,7 @@ cmdMessenger.sendCmd(logger,tmpMess);
 #endif
 #if defined (AUTOTUNE_PYCMD_INFO)
 String tmpMess="";
-tmpMess += F("INFO: Autotune: Process gain ");
+tmpMess += F("DEBUG: Autotune: Process gain ");
 tmpMess += String(K_process,6);
 cmdMessenger.sendCmd(logger,tmpMess);
 #endif
@@ -481,7 +481,7 @@ cmdMessenger.sendCmd(logger,tmpMess);
 
 #if defined (AUTOTUNE_PYCMD_INFO)
 String tmpMess="";
-tmpMess += F("INFO: Autotune: peakCount ");
+tmpMess += F("DEBUG: Autotune: peakCount ");
 tmpMess += String(peakCount,6);
 tmpMess += F(" peaks ");
 for (byte i = 0; i < (peakCount > 4 ? 5 : peakCount); i++)
@@ -526,7 +526,7 @@ cmdMessenger.sendCmd(logger,tmpMess);
 #endif
 #if defined (AUTOTUNE_PYCMD_INFO)
 String tmpMess="";
-tmpMess += F("INFO: Autotune: peakCount  ");
+tmpMess += F("DEBUG: Autotune: peakCount  ");
 tmpMess += String(peakCount,6);
 tmpMess += F(" refVal ");
 tmpMess += String(refVal,6);
@@ -592,7 +592,7 @@ cmdMessenger.sendCmd(logger,tmpMess);
 #endif
 #if defined (AUTOTUNE_PYCMD_INFO)
 String tmpMess="";
-tmpMess += F("INFO: Autotune: peakCount  ");
+tmpMess += F("DEBUG: Autotune: peakCount  ");
 tmpMess += String(peakCount,6);
 tmpMess +=F("amplitude ");
 tmpMess += String(inducedAmplitude);
@@ -621,7 +621,7 @@ cmdMessenger.sendCmd(logger,tmpMess);
 
 #if defined (AUTOTUNE_PYCMD_INFO)
 String tmpMess="";
-tmpMess +=F("INFO: Autotune: phase lag ");
+tmpMess +=F("DEBUG: Autotune: phase lag ");
 tmpMess += String(phaseLag / CONST_PI * 180.0);
 cmdMessenger.sendCmd(logger,tmpMess);
 #endif
@@ -654,7 +654,7 @@ cmdMessenger.sendCmd(logger,tmpMess);
 #endif
 #if defined (AUTOTUNE_PYCMD_INFO)
 String tmpMess="";
-tmpMess +=F("INFO: Autotune: newWorkingNoiseBand ");
+tmpMess +=F("DEBUG: Autotune: newWorkingNoiseBand ");
 tmpMess += String(newWorkingNoiseBand);
 cmdMessenger.sendCmd(logger,tmpMess);
 #endif
@@ -946,13 +946,6 @@ byte PID_ATune::GetControlType()
 void PID_ATune::SetNoiseBand(double band)
 {
   noiseBand = band;
-  #if defined (AUTOTUNE_PYCMD_INFO)
-  Serial.println("IN set noiseBand");
-  String tmpMess="";
-  tmpMess +=F("INFO: In noiseband noisband");
-  tmpMess += String(noiseBand);
-  cmdMessenger.sendCmd(logger,tmpMess);
-  #endif
 }
 
 double PID_ATune::GetNoiseBand()
